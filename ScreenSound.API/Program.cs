@@ -8,11 +8,13 @@ using ScreenSound.Shared.Modelos.Modelos;
 using System.Data.SqlTypes;
 using System.Text.Json.Serialization;
 
+DotNetEnv.Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ScreenSoundContext>((options) => {
     options
-            .UseSqlServer(builder.Configuration["ConnectionStrings:ScreenSoundDB"])
+            .UseSqlServer(System.Environment.GetEnvironmentVariable("CONNECTION_STRING"))
             .UseLazyLoadingProxies();
 });
 builder.Services.AddTransient<DAL<Artista>>();
